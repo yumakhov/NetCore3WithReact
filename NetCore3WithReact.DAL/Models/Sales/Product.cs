@@ -4,10 +4,7 @@ namespace NetCore3WithReact.DAL.Models.Sales
 {
     public class Product: Identity
     {
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
+        public string Name { get; set; }        
         public Vendor Vendor { get; set; }
     }
 }

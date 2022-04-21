@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using NetCore3WithReact.DAL.EntityConfigurations;
 using NetCore3WithReact.DAL.Models;
 using NetCore3WithReact.DAL.Models.Sales;
 
@@ -22,8 +23,8 @@ namespace NetCore3WithReact.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Product>();
-            builder.Entity<Vendor>();
+            builder.ApplyConfiguration(new ProductConfiguration());
+            builder.ApplyConfiguration(new VendorConfiguration());            
         }
     }
 }
