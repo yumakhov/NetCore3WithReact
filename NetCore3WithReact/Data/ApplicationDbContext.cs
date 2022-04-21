@@ -8,7 +8,7 @@ using NetCore3WithReact.DAL.Models.Sales;
 
 namespace NetCore3WithReact.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Vendor> Vendors { get; set; }

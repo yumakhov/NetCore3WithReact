@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetCore3WithReact.Data;
 using NetCore3WithReact.DAL.Models;
+using NetCore3WithReact.DAL.EntityConfigurations;
 
 namespace NetCore3WithReact
 {
@@ -41,6 +42,8 @@ namespace NetCore3WithReact
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
