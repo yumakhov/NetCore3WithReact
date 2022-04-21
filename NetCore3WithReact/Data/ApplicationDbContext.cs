@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using NetCore3WithReact.Models;
-using NetCore3WithReact.Models.Sales;
+using NetCore3WithReact.DAL.Models;
+using NetCore3WithReact.DAL.Models.Sales;
 
 namespace NetCore3WithReact.Data
 {

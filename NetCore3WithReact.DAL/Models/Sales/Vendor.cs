@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NetCore3WithReact.Models.Sales
+namespace NetCore3WithReact.DAL.Models.Sales
 {
     public class Vendor: Identity
     {

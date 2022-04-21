@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetCore3WithReact.Models
+namespace NetCore3WithReact.DAL.Models
 {
     public class Identity
     {
