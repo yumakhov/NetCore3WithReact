@@ -1,0 +1,13 @@
+﻿using NetCore3WithReact.DAL.Models.Sales;
+using NetCore3WithReact.DAL.Repositories;
+using System;
+
+namespace NetCore3WithReact.DAL.EntityConfigurations
+{
+    public interface IDataManager: IDisposable
+    {
+        IGenericRepository<Product> ProductRepository { get; }
+        IGenericRepository<Vendor> VendorRepository { get; }
+        int Save();
+    }
+}

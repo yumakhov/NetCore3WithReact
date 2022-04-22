@@ -14,5 +14,6 @@ namespace NetCore3WithReact.DAL.EntityConfigurations
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         EntityEntry Entry(object entity);
+        void Dispose();
     }
 }

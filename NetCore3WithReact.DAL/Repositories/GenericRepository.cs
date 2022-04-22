@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetCore3WithReact.DAL.EntityConfigurations;
 using NetCore3WithReact.DAL.Models;
-using NetCore3WithReact.DAL.Models.Sales;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace NetCore3WithReact.DAL.Repositories
 {
-    public class GenericRepository<TEntity> where TEntity: class, IIdentityModel
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IIdentityModel
     {
         //todo: change to factory
         private readonly IApplicationDbContext _dbContext;
@@ -21,15 +20,12 @@ namespace NetCore3WithReact.DAL.Repositories
             _dbSet = dbContext.Set<TEntity>();
         }
 
-        public virtual List<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return _dbSet.ToList();
         }
 
-        public virtual List<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+        public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -48,10 +44,8 @@ namespace NetCore3WithReact.DAL.Repositories
             {
                 return orderBy(query).ToList();
             }
-            else
-            {
-                return query.ToList();
-            }
+            
+            return query.ToList();            
         }
 
         public virtual TEntity GetById(Guid id)
