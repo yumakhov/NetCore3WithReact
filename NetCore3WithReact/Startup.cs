@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using NetCore3WithReact.Data;
 using NetCore3WithReact.DAL.Models;
 using NetCore3WithReact.DAL.EntityConfigurations;
+using NetCore3WithReact.DAL.DependencyConfig;
 
 namespace NetCore3WithReact
 {
@@ -42,6 +43,8 @@ namespace NetCore3WithReact
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            ServiceRegistrationConfig.RegisterTypes(services);
 
             services.AddTransient<IDataManagerFactory, DataManagerFactory>();
 

@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NetCore3WithReact.DAL\NetCore3WithReact.DAL.csproj" />
+    <ProjectReference Include="..\NetCore3WithReact.Utilities\NetCore3WithReact.Utilities.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

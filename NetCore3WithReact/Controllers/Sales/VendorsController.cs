@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using NetCore3WithReact.DAL.EntityConfigurations;
 using NetCore3WithReact.DAL.Models.Sales;
+using NetCore3WithReact.Utilities;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +12,15 @@ namespace NetCore3WithReact.Controllers.Sales
     [ApiController]
     public class VendorsController : ControllerBase
     {
-        private readonly IDataManagerFactory _dataManagerFactory;
+        private const string CacheKeyPrefix = "Vendors";
 
-        public VendorsController(IDataManagerFactory dataManagerFactory)
+        private readonly IDataManagerFactory _dataManagerFactory;
+        private readonly IDistributedCache _distributedCache;
+
+        public VendorsController(IDataManagerFactory dataManagerFactory, IDistributedCache distributedCache)
         {
             _dataManagerFactory = dataManagerFactory;
+            _distributedCache = distributedCache;
         }
 
         [HttpGet]
@@ -29,9 +35,18 @@ namespace NetCore3WithReact.Controllers.Sales
         [HttpGet("{id}")]
         public Vendor Get(Guid id)
         {
+            var cacheKey = $"{CacheKeyPrefix}_{id}";
+            var cachedItemJson = _distributedCache.GetString(cacheKey);
+            if (cachedItemJson != null)
+            {
+                JsonSerializer.Deserialize<Vendor>(cachedItemJson);
+            }
+
             using (var dataManager = _dataManagerFactory.Create())
             {
-                return dataManager.VendorRepository.GetById(id);
+                var vendor = dataManager.VendorRepository.GetById(id);
+                _distributedCache.SetString(cacheKey, JsonSerializer.Serialize(vendor));
+                return vendor;
             }
         }
 
