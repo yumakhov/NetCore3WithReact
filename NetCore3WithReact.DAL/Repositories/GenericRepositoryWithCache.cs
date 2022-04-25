@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace NetCore3WithReact.DAL.Repositories
 {
-    public class GenericRepositoryWithCache<T>: IGenericRepository<T> where T: IIdentityModel
+    public class GenericRepositoryWithCache<T>: IGenericRepository<T> where T: class, IIdentityModel
     {
         private readonly IGenericRepository<T> _decoratedRepository;
         private readonly IDistributedCache _distributedCache;
@@ -23,6 +23,7 @@ namespace NetCore3WithReact.DAL.Repositories
         public void Delete(T entityToDelete)
         {
             _decoratedRepository.Delete(entityToDelete);
+            InvalidateItemCache(entityToDelete.Id);
         }
 
         public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<System.Linq.IQueryable<T>, System.Linq.IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
@@ -37,14 +38,16 @@ namespace NetCore3WithReact.DAL.Repositories
 
         public T GetById(Guid id)
         {
-            var cacheKey = CreateCacheKey(id);
+            var cacheKey = CreateItemCacheKey(id);
             var cachedItemJson = _distributedCache.GetString(cacheKey);
             if (cachedItemJson != null)
             {
-                JsonSerializer.Deserialize<T>(cachedItemJson);
+                return JsonSerializer.Deserialize<T>(cachedItemJson);
             }
 
-            return _decoratedRepository.GetById(id);
+            var entity = _decoratedRepository.GetById(id);
+            _distributedCache.SetString(cacheKey, JsonSerializer.Serialize(entity));
+            return entity;
         }
 
         public void Insert(T entityToInsert)
@@ -55,9 +58,16 @@ namespace NetCore3WithReact.DAL.Repositories
         public void Update(T entityToUpdate)
         {
             _decoratedRepository.Update(entityToUpdate);
+            InvalidateItemCache(entityToUpdate.Id);
         }
 
-        private string CreateCacheKey(Guid id)
+        private void InvalidateItemCache(Guid id)
+        {
+            var cacheKey = CreateItemCacheKey(id);
+            _distributedCache.Remove(cacheKey);
+        }
+
+        private string CreateItemCacheKey(Guid id)
         {
             return $"{_cacheKeyPrefix}_{id}";
         }

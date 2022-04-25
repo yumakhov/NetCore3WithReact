@@ -1,18 +1,22 @@
-﻿using NetCore3WithReact.DAL.EntityConfigurations;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using NetCore3WithReact.DAL.EntityConfigurations;
 
 namespace NetCore3WithReact.Data
 {
     public class DataManagerFactory: IDataManagerFactory
     {
-        public IApplicationDbContext _dbContext;
-        public DataManagerFactory(IApplicationDbContext dbContext)
+        private readonly IApplicationDbContext _dbContext;
+        private readonly IDistributedCache _distributedCache;
+
+        public DataManagerFactory(IApplicationDbContext dbContext, IDistributedCache distributedCache)
         {
             _dbContext = dbContext;
+            _distributedCache = distributedCache;
         }
         
         public IDataManager Create()
         {
-            return new DataManager(_dbContext);
+            return new DataManager(_dbContext, _distributedCache);
         }
     }
 }
