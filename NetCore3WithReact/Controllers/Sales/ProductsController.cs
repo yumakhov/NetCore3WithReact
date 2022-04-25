@@ -6,52 +6,52 @@ using System.Collections.Generic;
 
 namespace NetCore3WithReact.Controllers.Sales
 {
-    [Route("api/v1/vendors")]
+    [Route("api/v1/products")]
     [ApiController]
-    public class VendorsController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IDataManagerFactory _dataManagerFactory;
 
-        public VendorsController(IDataManagerFactory dataManagerFactory)
+        public ProductsController(IDataManagerFactory dataManagerFactory)
         {
             _dataManagerFactory = dataManagerFactory;
         }
 
         [HttpGet]
-        public IEnumerable<Vendor> Get()
+        public IEnumerable<Product> Get()
         {
             using(var dataManager = _dataManagerFactory.Create())
             {
-                return dataManager.VendorRepository.GetAll();
+                return dataManager.ProductRepository.GetAll();
             }
         }
 
         [HttpGet("{id}")]
-        public Vendor Get(Guid id)
+        public Product Get(Guid id)
         {
             using (var dataManager = _dataManagerFactory.Create())
             {
-                var vendor = dataManager.VendorRepository.GetById(id);
-                return vendor;
+                var product = dataManager.ProductRepository.GetById(id);
+                return product;
             }
         }
 
         [HttpPost]
-        public void Post([FromBody] Vendor value)
+        public void Post([FromBody] Product value)
         {
             using (var dataManager = _dataManagerFactory.Create())
             {
-                dataManager.VendorRepository.Insert(value);
+                dataManager.ProductRepository.Insert(value);
                 dataManager.Save();
             }
         }
 
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] Vendor value)
+        public void Put(Guid id, [FromBody] Product value)
         {
             using (var dataManager = _dataManagerFactory.Create())
             {
-                dataManager.VendorRepository.Update(value);
+                dataManager.ProductRepository.Update(value);
                 dataManager.Save();
             }
         }
@@ -61,8 +61,8 @@ namespace NetCore3WithReact.Controllers.Sales
         {
             using (var dataManager = _dataManagerFactory.Create())
             {
-                var vendorToDelete = dataManager.VendorRepository.GetById(id);
-                dataManager.VendorRepository.Delete(vendorToDelete);
+                var productToDelete = dataManager.ProductRepository.GetById(id);
+                dataManager.ProductRepository.Delete(productToDelete);
                 dataManager.Save();
             }
         }
