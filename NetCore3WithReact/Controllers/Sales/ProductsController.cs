@@ -10,61 +10,46 @@ namespace NetCore3WithReact.Controllers.Sales
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IDataManagerFactory _dataManagerFactory;
+        private readonly IDataManager _dataManager;
 
-        public ProductsController(IDataManagerFactory dataManagerFactory)
+        public ProductsController(IDataManager dataManager)
         {
-            _dataManagerFactory = dataManagerFactory;
+            _dataManager = dataManager;
         }
 
         [HttpGet]
         public IEnumerable<Product> Get()
-        {
-            using(var dataManager = _dataManagerFactory.Create())
-            {
-                return dataManager.ProductRepository.GetAll();
-            }
+        {            
+            return _dataManager.ProductRepository.GetAll();            
         }
 
         [HttpGet("{id}")]
         public Product Get(Guid id)
         {
-            using (var dataManager = _dataManagerFactory.Create())
-            {
-                var product = dataManager.ProductRepository.GetById(id);
-                return product;
-            }
+            var product = _dataManager.ProductRepository.GetById(id);
+            return product;            
         }
 
         [HttpPost]
         public void Post([FromBody] Product value)
         {
-            using (var dataManager = _dataManagerFactory.Create())
-            {
-                dataManager.ProductRepository.Insert(value);
-                dataManager.Save();
-            }
+            _dataManager.ProductRepository.Insert(value);
+            _dataManager.Save();            
         }
 
         [HttpPut("{id}")]
         public void Put(Guid id, [FromBody] Product value)
         {
-            using (var dataManager = _dataManagerFactory.Create())
-            {
-                dataManager.ProductRepository.Update(value);
-                dataManager.Save();
-            }
+            _dataManager.ProductRepository.Update(value);
+            _dataManager.Save();            
         }
 
         [HttpDelete("{id}")]
         public void Delete(Guid id)
         {
-            using (var dataManager = _dataManagerFactory.Create())
-            {
-                var productToDelete = dataManager.ProductRepository.GetById(id);
-                dataManager.ProductRepository.Delete(productToDelete);
-                dataManager.Save();
-            }
+            var productToDelete = _dataManager.ProductRepository.GetById(id);
+            _dataManager.ProductRepository.Delete(productToDelete);
+            _dataManager.Save();            
         }
     }
 }

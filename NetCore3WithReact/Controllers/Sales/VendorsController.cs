@@ -10,61 +10,52 @@ namespace NetCore3WithReact.Controllers.Sales
     [ApiController]
     public class VendorsController : ControllerBase
     {
-        private readonly IDataManagerFactory _dataManagerFactory;
+        private readonly IDataManager _dataManager;
 
-        public VendorsController(IDataManagerFactory dataManagerFactory)
+        public VendorsController(IDataManager dataManager)
         {
-            _dataManagerFactory = dataManagerFactory;
+            _dataManager = dataManager;
         }
 
         [HttpGet]
         public IEnumerable<Vendor> Get()
-        {
-            using(var dataManager = _dataManagerFactory.Create())
-            {
-                return dataManager.VendorRepository.GetAll();
-            }
+        {           
+            return _dataManager.VendorRepository.GetAll();            
         }
 
         [HttpGet("{id}")]
         public Vendor Get(Guid id)
         {
-            using (var dataManager = _dataManagerFactory.Create())
-            {
-                var vendor = dataManager.VendorRepository.GetById(id);
-                return vendor;
-            }
+            _dataManager.VendorRepository.GetAll();
+            var vendor = _dataManager.VendorRepository.GetById(id);
+            return vendor;            
         }
 
         [HttpPost]
         public void Post([FromBody] Vendor value)
-        {
-            using (var dataManager = _dataManagerFactory.Create())
-            {
-                dataManager.VendorRepository.Insert(value);
-                dataManager.Save();
-            }
+        {            
+            _dataManager.VendorRepository.Insert(value);
+            _dataManager.Save();            
         }
 
         [HttpPut("{id}")]
         public void Put(Guid id, [FromBody] Vendor value)
         {
-            using (var dataManager = _dataManagerFactory.Create())
-            {
-                dataManager.VendorRepository.Update(value);
-                dataManager.Save();
-            }
+            _dataManager.VendorRepository.Update(value);
+            _dataManager.Save();            
         }
 
         [HttpDelete("{id}")]
         public void Delete(Guid id)
         {
-            using (var dataManager = _dataManagerFactory.Create())
+            var vendorToDelete = _dataManager.VendorRepository.GetById(id);
+            if (vendorToDelete == null)
             {
-                var vendorToDelete = dataManager.VendorRepository.GetById(id);
-                dataManager.VendorRepository.Delete(vendorToDelete);
-                dataManager.Save();
+                return;
             }
+
+            _dataManager.VendorRepository.Delete(vendorToDelete);
+            _dataManager.Save();            
         }
     }
 }

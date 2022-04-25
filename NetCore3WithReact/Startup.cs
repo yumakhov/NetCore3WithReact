@@ -29,7 +29,8 @@ namespace NetCore3WithReact
                 options.UseNpgsql(
                     Configuration.GetConnectionString("PostgreSqlConnectionString"),
                     b => b.MigrationsAssembly("NetCore3WithReact")
-                )
+                ),
+                ServiceLifetime.Scoped
             );
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -44,15 +45,15 @@ namespace NetCore3WithReact
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            ServiceRegistrationConfig.RegisterTypes(services);
-
-            services.AddTransient<IDataManagerFactory, DataManagerFactory>();
-
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddScoped<IDataManager, DataManager>();
+
+            ServiceRegistrationConfig.RegisterTypes(services);            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
