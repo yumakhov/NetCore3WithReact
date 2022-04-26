@@ -32,9 +32,9 @@ namespace NetCore3WithReact.DAL.Repositories
             return _decoratedRepository.Get(filter, orderBy, includeProperties);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string includeProperties = "")
         {
-            return _decoratedRepository.GetAll();
+            return _decoratedRepository.GetAll(includeProperties);
         }
 
         public T GetById(Guid id)

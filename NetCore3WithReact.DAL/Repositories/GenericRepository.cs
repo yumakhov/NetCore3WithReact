@@ -20,9 +20,15 @@ namespace NetCore3WithReact.DAL.Repositories
             _dbSet = dbContext.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll(string includeProperties = "")
         {
-            return _dbSet.ToList();
+            IQueryable<TEntity> query = _dbSet;
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            return query.ToList();
         }
 
         public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
