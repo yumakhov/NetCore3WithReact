@@ -10,6 +10,8 @@ using NetCore3WithReact.Data;
 using NetCore3WithReact.DAL.Models;
 using NetCore3WithReact.DAL.EntityConfigurations;
 using NetCore3WithReact.DAL.DependencyConfig;
+using NetCore3WithReact.DAL.Services;
+using NetCore3WithReact.Services;
 
 namespace NetCore3WithReact
 {
@@ -52,7 +54,7 @@ namespace NetCore3WithReact
             });
 
             services.AddScoped<IDataManager, DataManager>();
-
+            services.AddScoped<IFeatureSettingsService, FeatureSettingsService>();
             ServiceRegistrationConfig.RegisterTypes(services);            
         }
 

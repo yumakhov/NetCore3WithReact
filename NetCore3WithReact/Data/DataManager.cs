@@ -3,6 +3,7 @@ using NetCore3WithReact.DAL.EntityConfigurations;
 using NetCore3WithReact.DAL.Models;
 using NetCore3WithReact.DAL.Models.Sales;
 using NetCore3WithReact.DAL.Repositories;
+using NetCore3WithReact.DAL.Services;
 using System;
 
 namespace NetCore3WithReact.Data
@@ -12,11 +13,13 @@ namespace NetCore3WithReact.Data
         private bool _disposed;
         private readonly IApplicationDbContext _dbContext;
         private readonly IDistributedCache _distributedCache;
+        private readonly IFeatureSettingsService _featureSettingsService;
 
-        public DataManager(IApplicationDbContext dbContext, IDistributedCache distributedCache)
+        public DataManager(IApplicationDbContext dbContext, IDistributedCache distributedCache, IFeatureSettingsService featureSettingsService)
         {
             _dbContext = dbContext;
             _distributedCache = distributedCache;
+            _featureSettingsService = featureSettingsService;
         }
 
         private IGenericRepository<Product> productRepository;
@@ -28,6 +31,11 @@ namespace NetCore3WithReact.Data
         private IGenericRepository<T> CreateGenericRepositoryWithCache<T>(string cacheKeyPrefix) where T: class, IIdentityModel
         {
             var baseRepository = new GenericRepository<T>(_dbContext);
+            if (!_featureSettingsService.IsCacheEnabled)
+            {
+                return baseRepository;
+            }
+
             return new GenericRepositoryWithCache<T>(baseRepository, _distributedCache, cacheKeyPrefix);
         }
 
