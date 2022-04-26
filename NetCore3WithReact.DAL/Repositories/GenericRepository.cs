@@ -58,6 +58,11 @@ namespace NetCore3WithReact.DAL.Repositories
             _dbSet.Add(entityToInsert);
         }
 
+        public void InsertRange(IEnumerable<TEntity> entitiesToInsert)
+        {
+            _dbSet.AddRange(entitiesToInsert);
+        }
+
         public virtual void Update(TEntity entityToUpdate)
         {
             _dbSet.Attach(entityToUpdate);

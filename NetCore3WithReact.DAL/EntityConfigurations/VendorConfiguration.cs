@@ -14,6 +14,10 @@ namespace NetCore3WithReact.DAL.EntityConfigurations
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.HasMany(p => p.Products)
+                .WithOne()
+                .IsRequired();
         }
     }
 }

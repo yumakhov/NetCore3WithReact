@@ -97,6 +97,11 @@ namespace NetCore3WithReact.DAL.Repositories
             _decoratedRepository.Insert(entityToInsert);
         }
 
+        public void InsertRange(IEnumerable<T> entitiesToInsert)
+        {
+            _decoratedRepository.InsertRange(entitiesToInsert);
+        }
+
         public void Update(T entityToUpdate)
         {
             _decoratedRepository.Update(entityToUpdate);
