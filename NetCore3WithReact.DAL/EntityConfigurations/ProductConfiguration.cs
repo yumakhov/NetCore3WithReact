@@ -8,16 +8,23 @@ namespace NetCore3WithReact.DAL.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.ToTable("Products")
+            builder
+                .ToTable("Products")
                 .HasKey(p => p.Id);
 
-            builder.Property(p => p.Name)
+            builder
+                .Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.HasOne(product => product.Vendor)
-                .WithMany(vendor => vendor.Products)
+            builder
+                .Property(product => product.VendorId)
                 .IsRequired();
+
+            builder
+                .HasOne(product => product.Vendor)
+                .WithMany(vendor => vendor.Products)
+                .HasForeignKey(product => product.VendorId);
         }
     }
 }
