@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetCore3WithReact.DAL.EntityConfigurations;
-using NetCore3WithReact.DAL.Models.Sales;
+using NetCore3WithReact.BusinessLogic.DataContracts;
+using NetCore3WithReact.BusinessLogic.Services;
 using System;
 using System.Collections.Generic;
 
@@ -10,46 +10,41 @@ namespace NetCore3WithReact.Controllers.Sales
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IDataManager _dataManager;
+        private readonly IProductService _productService;
 
-        public ProductsController(IDataManager dataManager)
+        public ProductsController(IProductService productService)
         {
-            _dataManager = dataManager;
+            _productService = productService;
         }
 
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public IEnumerable<ProductData> Get()
         {            
-            return _dataManager.ProductRepository.GetAll();            
+            return _productService.GetAllProducts();            
         }
 
         [HttpGet("{id}")]
-        public Product Get(Guid id)
+        public ProductData Get(Guid id)
         {
-            var product = _dataManager.ProductRepository.GetById(id);
-            return product;            
+            return _productService.Get(id);            
         }
 
         [HttpPost]
-        public void Post([FromBody] Product value)
+        public void Post([FromBody] ProductData value)
         {
-            _dataManager.ProductRepository.Insert(value);
-            _dataManager.Save();            
+            _productService.Post(value);
         }
 
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] Product value)
+        public void Put(Guid id, [FromBody] ProductData value)
         {
-            _dataManager.ProductRepository.Update(value);
-            _dataManager.Save();            
+            _productService.Put(value);
         }
 
         [HttpDelete("{id}")]
         public void Delete(Guid id)
         {
-            var productToDelete = _dataManager.ProductRepository.GetById(id);
-            _dataManager.ProductRepository.Delete(productToDelete);
-            _dataManager.Save();            
+            _productService.Delete(id);
         }
     }
 }
