@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace NetCore3WithReact.DAL.DependencyConfig
+namespace NetCore3WithReact.DAL
 {
     public static class DependenciesRegistrator
     {
