@@ -2,9 +2,9 @@
 
 namespace NetCore3WithReact.DAL.DependencyConfig
 {
-    public static class ServiceRegistrationConfig
+    public static class DependenciesRegistrator
     {
-        public static void RegisterTypes(IServiceCollection services)
+        public static void Register(IServiceCollection services)
         {
             services.AddStackExchangeRedisCache(options =>
             {
