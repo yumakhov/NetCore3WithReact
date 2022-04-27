@@ -53,9 +53,15 @@ namespace NetCore3WithReact
                 configuration.RootPath = "ClientApp/build";
             });
 
+            RegisterDependencies(services);
+        }
+
+        private static void RegisterDependencies(IServiceCollection services)
+        {
             services.AddScoped<IDataManager, DataManager>();
             services.AddScoped<IFeatureSettingsService, FeatureSettingsService>();
-            ServiceRegistrationConfig.RegisterTypes(services);            
+            ServiceRegistrationConfig.RegisterTypes(services);
+            BusinessLogic.Services.DependenciesRegistrator.Register(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

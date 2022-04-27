@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NetCore3WithReact.BusinessLogic\NetCore3WithReact.BusinessLogic.csproj" />
     <ProjectReference Include="..\NetCore3WithReact.DAL\NetCore3WithReact.DAL.csproj" />
     <ProjectReference Include="..\NetCore3WithReact.Utilities\NetCore3WithReact.Utilities.csproj" />
   </ItemGroup>
