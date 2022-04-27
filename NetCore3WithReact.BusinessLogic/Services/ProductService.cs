@@ -1,6 +1,6 @@
 ﻿using NetCore3WithReact.DAL.EntityConfigurations;
 
-namespace NetCore3WithReact.BusinessLogic.Services.Product
+namespace NetCore3WithReact.BusinessLogic.Services
 {
     public class ProductService : IProductService
     {

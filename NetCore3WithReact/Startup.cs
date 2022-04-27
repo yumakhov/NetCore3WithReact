@@ -59,6 +59,7 @@ namespace NetCore3WithReact
         {
             services.AddScoped<IDataManager, DataManager>();
             services.AddScoped<IFeatureSettingsService, FeatureSettingsService>();
+
             DAL.DependenciesRegistrator.Register(services);
             BusinessLogic.Services.DependenciesRegistrator.Register(services);
         }
