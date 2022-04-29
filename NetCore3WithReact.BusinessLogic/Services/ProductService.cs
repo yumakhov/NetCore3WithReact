@@ -29,15 +29,15 @@ namespace NetCore3WithReact.BusinessLogic.Services
             return ToProductData(product);
         }
 
-        private static ProductData ToProductData(Product product)
+        private ProductData ToProductData(Product product)
         {
             return new ProductData
             {
                 Id = product.Id,
                 Name = product.Name,
                 Vendor = ToVendorData(product.Vendor),
-                //TODO: productTag.Tag is null. Try to fix
-                Tags = product.Tags.Select(productTag => ToTagData(productTag.Tag)).ToList()
+                //TODO: productTag.Tag is null. Try to refactor it
+                Tags = product.Tags.Select(productTag => ToTagData(_dataManager.TagRepository.GetById(productTag.TagId))).ToList()
             };
         }
 
