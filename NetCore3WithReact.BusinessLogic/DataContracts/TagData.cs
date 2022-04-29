@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace NetCore3WithReact.BusinessLogic.DataContracts
 {
     [DataContract]
-    public class ProductData
+    public class TagData
     {
         [DataMember]
         public Guid Id { get; set; }
@@ -13,10 +12,5 @@ namespace NetCore3WithReact.BusinessLogic.DataContracts
         [DataMember]
         public string Name { get; set; }
 
-        [DataMember]
-        public VendorData Vendor { get; set; }
-
-        [DataMember]
-        public ICollection<TagData> Tags { get; set; } = new List<TagData>();
     }
 }

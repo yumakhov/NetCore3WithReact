@@ -18,7 +18,7 @@ namespace NetCore3WithReact.DAL.Entities.Tags
 
             builder
                 .HasOne(productTag => productTag.Product)
-                .WithMany(product => product.ProductTags)
+                .WithMany(product => product.Tags)
                 .HasForeignKey(productTag => productTag.ProductId);
         }
     }

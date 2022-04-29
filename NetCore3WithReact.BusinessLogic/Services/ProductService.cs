@@ -1,6 +1,7 @@
 ﻿using NetCore3WithReact.BusinessLogic.DataContracts;
 using NetCore3WithReact.DAL.DataProviders;
 using NetCore3WithReact.DAL.Entities.Sales;
+using NetCore3WithReact.DAL.Entities.Tags;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace NetCore3WithReact.BusinessLogic.Services
 
         public IEnumerable<ProductData> GetAllProducts()
         {
-            var products = _dataManager.ProductRepository.GetAll("Vendor");
+            var products = _dataManager.ProductRepository.GetAll("Vendor,Tags");
             return products.Select(ToProductData);
         }
 
@@ -34,7 +35,8 @@ namespace NetCore3WithReact.BusinessLogic.Services
             {
                 Id = product.Id,
                 Name = product.Name,
-                Vendor = ToVendorData(product.Vendor)
+                Vendor = ToVendorData(product.Vendor),
+                Tags = product.Tags.Select(ToTagData).ToList()
             };
         }
 
@@ -44,6 +46,15 @@ namespace NetCore3WithReact.BusinessLogic.Services
             {
                 Id = vendor.Id,
                 Name = vendor.Name
+            };
+        }
+
+        private static TagData ToTagData(ProductTag productTag)
+        {
+            return new TagData
+            {
+                Id = productTag.Tag.Id,
+                Name = productTag.Tag.Name
             };
         }
 

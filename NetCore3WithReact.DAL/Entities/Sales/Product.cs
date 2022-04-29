@@ -10,6 +10,6 @@ namespace NetCore3WithReact.DAL.Entities.Sales
         public string Description { get; set; }
         public Guid VendorId { get; set; }
         public Vendor Vendor { get; set; }
-        public virtual ICollection<ProductTag> ProductTags { get; set; } = new HashSet<ProductTag>();
+        public virtual ICollection<ProductTag> Tags { get; set; } = new HashSet<ProductTag>();
     }
 }
