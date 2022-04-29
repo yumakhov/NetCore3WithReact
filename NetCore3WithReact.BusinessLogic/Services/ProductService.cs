@@ -25,7 +25,7 @@ namespace NetCore3WithReact.BusinessLogic.Services
 
         public ProductData Get(Guid id)
         {
-            var product = _dataManager.ProductRepository.GetById(id);
+            var product = _dataManager.ProductRepository.GetById(id, "Vendor,Tags");
             return ToProductData(product);
         }
 
@@ -36,7 +36,8 @@ namespace NetCore3WithReact.BusinessLogic.Services
                 Id = product.Id,
                 Name = product.Name,
                 Vendor = ToVendorData(product.Vendor),
-                Tags = product.Tags.Select(ToTagData).ToList()
+                //TODO: productTag.Tag is null. Try to fix
+                Tags = product.Tags.Select(productTag => ToTagData(productTag.Tag)).ToList()
             };
         }
 
@@ -46,15 +47,6 @@ namespace NetCore3WithReact.BusinessLogic.Services
             {
                 Id = vendor.Id,
                 Name = vendor.Name
-            };
-        }
-
-        private static TagData ToTagData(ProductTag productTag)
-        {
-            return new TagData
-            {
-                Id = productTag.Tag.Id,
-                Name = productTag.Tag.Name
             };
         }
 
@@ -96,6 +88,45 @@ namespace NetCore3WithReact.BusinessLogic.Services
             var productToDelete = _dataManager.ProductRepository.GetById(id);
             _dataManager.ProductRepository.Delete(productToDelete);
             _dataManager.Save();
+        }
+
+        public TagData AddProductTag(Guid productId, string tagName)
+        {
+            var product = _dataManager.ProductRepository.GetById(productId);
+            if (product == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            var tag = _dataManager.TagRepository.Get(entity => entity.Name == tagName).FirstOrDefault();
+            if (tag == null)
+            {
+                tag = new Tag
+                {
+                    Id = Guid.NewGuid(),
+                    Name = tagName
+                };
+            }
+            _dataManager.TagRepository.Insert(tag);
+
+            product.Tags.Add(new ProductTag
+            {
+                ProductId = product.Id,
+                TagId = tag.Id
+            });
+
+            _dataManager.Save();
+
+            return ToTagData(tag);
+        }
+
+        private static TagData ToTagData(Tag tag)
+        {
+            return new TagData
+            {
+                Id = tag.Id,
+                Name = tag.Name
+            };
         }
     }
 }

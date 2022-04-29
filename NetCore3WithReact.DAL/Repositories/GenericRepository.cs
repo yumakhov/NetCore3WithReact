@@ -54,9 +54,17 @@ namespace NetCore3WithReact.DAL.Repositories
             return query.ToList();            
         }
 
-        public virtual TEntity GetById(Guid id)
+        public virtual TEntity GetById(Guid id, string includeProperties = "")
         {
-            return _dbSet.FirstOrDefault(x => x.Id == id);
+            IQueryable<TEntity> query = _dbSet;
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return query.FirstOrDefault(x => x.Id == id);
         }
 
         public virtual void Insert(TEntity entityToInsert)

@@ -46,5 +46,11 @@ namespace NetCore3WithReact.Controllers.Sales
         {
             _productService.Delete(id);
         }
+
+        [HttpPost("{id}/tags")]
+        public void CreateProductTag(Guid id, [FromBody] TagData value)
+        {
+            _productService.AddProductTag(id, value.Name);
+        }
     }
 }

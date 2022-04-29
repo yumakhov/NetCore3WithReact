@@ -11,5 +11,6 @@ namespace NetCore3WithReact.BusinessLogic.Services
         void Post(ProductData value);
         void Put(ProductData value);
         void Delete(Guid id);
+        TagData AddProductTag(Guid productId, string tagName);
     }
 }

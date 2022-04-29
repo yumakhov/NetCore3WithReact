@@ -2,6 +2,7 @@
 using NetCore3WithReact.DAL.DataProviders;
 using NetCore3WithReact.DAL.Entities;
 using NetCore3WithReact.DAL.Entities.Sales;
+using NetCore3WithReact.DAL.Entities.Tags;
 using NetCore3WithReact.DAL.Repositories;
 using NetCore3WithReact.DAL.Services;
 using System;
@@ -27,6 +28,9 @@ namespace NetCore3WithReact.Data
 
         private IGenericRepository<Vendor> vendorRepository;
         public IGenericRepository<Vendor> VendorRepository => vendorRepository ??= CreateGenericRepositoryWithCache<Vendor>(nameof(Vendor));
+
+        private IGenericRepository<Tag> tagRepository;
+        public IGenericRepository<Tag> TagRepository => tagRepository ??= CreateGenericRepositoryWithCache<Tag>(nameof(Tag));
 
         private IGenericRepository<T> CreateGenericRepositoryWithCache<T>(string cacheKeyPrefix) where T: class, IIdentityEntity
         {

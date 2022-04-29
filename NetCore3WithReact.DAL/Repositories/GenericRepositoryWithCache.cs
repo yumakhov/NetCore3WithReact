@@ -37,7 +37,7 @@ namespace NetCore3WithReact.DAL.Repositories
             return _decoratedRepository.GetAll(includeProperties);
         }
 
-        public T GetById(Guid id)
+        public T GetById(Guid id, string includeProperties = "")
         {
             var cachedItem = GetCachedItem<T>(id);
             if (cachedItem != null)
@@ -45,7 +45,7 @@ namespace NetCore3WithReact.DAL.Repositories
                 return cachedItem;
             }
 
-            var entity = _decoratedRepository.GetById(id);
+            var entity = _decoratedRepository.GetById(id, includeProperties);
             SetItemToCache(entity);
             return entity;
         }
