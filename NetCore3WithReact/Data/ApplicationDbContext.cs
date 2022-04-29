@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using NetCore3WithReact.DAL.DataProviders;
 using NetCore3WithReact.DAL.Entities;
 using NetCore3WithReact.DAL.Entities.Sales;
+using NetCore3WithReact.DAL.Entities.Tags;
 
 namespace NetCore3WithReact.Data
 {
@@ -12,6 +13,7 @@ namespace NetCore3WithReact.Data
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -25,6 +27,8 @@ namespace NetCore3WithReact.Data
             
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new VendorConfiguration());            
+            builder.ApplyConfiguration(new TagConfiguration());            
+            builder.ApplyConfiguration(new ProductTagConfiguration());            
         }
     }
 }
