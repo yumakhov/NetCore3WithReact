@@ -2,7 +2,7 @@
 using NetCore3WithReact.DAL.Repositories;
 using System;
 
-namespace NetCore3WithReact.DAL.EntityConfigurations
+namespace NetCore3WithReact.DAL.DataProviders
 {
     public interface IDataManager: IDisposable
     {

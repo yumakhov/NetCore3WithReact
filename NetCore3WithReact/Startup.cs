@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetCore3WithReact.Data;
 using NetCore3WithReact.DAL.Entities;
-using NetCore3WithReact.DAL.EntityConfigurations;
+using NetCore3WithReact.DAL.DataProviders;
 using NetCore3WithReact.DAL.Services;
 using NetCore3WithReact.Services;
 

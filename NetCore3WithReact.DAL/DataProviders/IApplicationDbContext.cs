@@ -4,7 +4,7 @@ using NetCore3WithReact.DAL.Entities.Sales;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NetCore3WithReact.DAL.EntityConfigurations
+namespace NetCore3WithReact.DAL.DataProviders
 {
     public interface IApplicationDbContext
     {

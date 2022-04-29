@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NetCore3WithReact.DAL.Entities.Sales;
 
-namespace NetCore3WithReact.DAL.EntityConfigurations
+namespace NetCore3WithReact.DAL.Entities.Sales
 {
     public class VendorConfiguration : IEntityTypeConfiguration<Vendor>
     {

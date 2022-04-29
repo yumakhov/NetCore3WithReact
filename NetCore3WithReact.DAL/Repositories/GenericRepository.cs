@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetCore3WithReact.DAL.EntityConfigurations;
+using NetCore3WithReact.DAL.DataProviders;
 using NetCore3WithReact.DAL.Entities;
 using System;
 using System.Collections.Generic;
