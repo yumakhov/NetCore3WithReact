@@ -17,6 +17,10 @@ namespace NetCore3WithReact.DAL.Entities.Sales
                 .HasMaxLength(100);
 
             builder
+                .Property(p => p.Description)
+                .IsRequired(false);
+
+            builder
                 .Property(product => product.VendorId)
                 .IsRequired();
 

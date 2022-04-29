@@ -30,5 +30,10 @@ namespace NetCore3WithReact.Data
             builder.ApplyConfiguration(new TagConfiguration());            
             builder.ApplyConfiguration(new ProductTagConfiguration());            
         }
+
+        public void Migrate()
+        {
+            base.Database.Migrate();
+        }
     }
 }
