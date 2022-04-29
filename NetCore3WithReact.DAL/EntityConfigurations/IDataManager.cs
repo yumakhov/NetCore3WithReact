@@ -1,4 +1,4 @@
-﻿using NetCore3WithReact.DAL.Models.Sales;
+﻿using NetCore3WithReact.DAL.Entities.Sales;
 using NetCore3WithReact.DAL.Repositories;
 using System;
 

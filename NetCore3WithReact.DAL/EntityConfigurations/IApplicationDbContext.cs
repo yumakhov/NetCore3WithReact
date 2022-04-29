@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using NetCore3WithReact.DAL.Models.Sales;
+using NetCore3WithReact.DAL.Entities.Sales;
 using System.Threading;
 using System.Threading.Tasks;
 

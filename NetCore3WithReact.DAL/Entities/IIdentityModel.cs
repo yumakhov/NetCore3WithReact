@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetCore3WithReact.DAL.Models
+namespace NetCore3WithReact.DAL.Entities
 {
     public interface IIdentityModel
     {

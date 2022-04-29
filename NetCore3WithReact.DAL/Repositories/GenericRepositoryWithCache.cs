@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using NetCore3WithReact.DAL.Models;
+using NetCore3WithReact.DAL.Entities;
 using NetCore3WithReact.Utilities;
 using StackExchange.Redis;
 using System;

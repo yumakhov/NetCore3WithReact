@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace NetCore3WithReact.DAL.Models
+namespace NetCore3WithReact.DAL.Entities
 {
     public class ApplicationUser : IdentityUser
     {

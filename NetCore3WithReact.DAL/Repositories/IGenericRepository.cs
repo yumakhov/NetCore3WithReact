@@ -1,4 +1,4 @@
-﻿using NetCore3WithReact.DAL.Models;
+﻿using NetCore3WithReact.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

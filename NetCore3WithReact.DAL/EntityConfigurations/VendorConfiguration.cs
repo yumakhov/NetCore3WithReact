@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NetCore3WithReact.DAL.Models.Sales;
+using NetCore3WithReact.DAL.Entities.Sales;
 
 namespace NetCore3WithReact.DAL.EntityConfigurations
 {

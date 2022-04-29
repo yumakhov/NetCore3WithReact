@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetCore3WithReact.DAL.EntityConfigurations;
-using NetCore3WithReact.DAL.Models.Sales;
+using NetCore3WithReact.DAL.Entities.Sales;
 using System;
 using System.Collections.Generic;
 

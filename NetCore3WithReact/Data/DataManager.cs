@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using NetCore3WithReact.DAL.EntityConfigurations;
-using NetCore3WithReact.DAL.Models;
-using NetCore3WithReact.DAL.Models.Sales;
+using NetCore3WithReact.DAL.Entities;
+using NetCore3WithReact.DAL.Entities.Sales;
 using NetCore3WithReact.DAL.Repositories;
 using NetCore3WithReact.DAL.Services;
 using System;

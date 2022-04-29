@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetCore3WithReact.DAL.Models.Sales
+namespace NetCore3WithReact.DAL.Entities.Sales
 {
     public class Product: IdentityModel
     {

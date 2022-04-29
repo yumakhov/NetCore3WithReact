@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetCore3WithReact.DAL.EntityConfigurations;
-using NetCore3WithReact.DAL.Models;
+using NetCore3WithReact.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
