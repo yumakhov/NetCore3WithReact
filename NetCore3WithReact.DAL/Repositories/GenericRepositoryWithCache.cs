@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace NetCore3WithReact.DAL.Repositories
 {
-    public class GenericRepositoryWithCache<T>: IGenericRepository<T> where T: class, IIdentityModel
+    public class GenericRepositoryWithCache<T>: IGenericRepository<T> where T: class, IIdentityEntity
     {
         private readonly IGenericRepository<T> _decoratedRepository;
         private readonly IDistributedCache _distributedCache;
@@ -50,7 +50,7 @@ namespace NetCore3WithReact.DAL.Repositories
             return entity;
         }
 
-        private TEntity GetCachedItem<TEntity>(Guid id) where TEntity : class, IIdentityModel
+        private TEntity GetCachedItem<TEntity>(Guid id) where TEntity : class, IIdentityEntity
         {
             try
             {
@@ -75,7 +75,7 @@ namespace NetCore3WithReact.DAL.Repositories
             }
         }
 
-        private void SetItemToCache<TEntity>(TEntity entity) where TEntity : class, IIdentityModel
+        private void SetItemToCache<TEntity>(TEntity entity) where TEntity : class, IIdentityEntity
         {
             try
             {

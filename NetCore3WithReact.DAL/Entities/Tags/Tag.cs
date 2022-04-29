@@ -1,6 +1,6 @@
 ﻿namespace NetCore3WithReact.DAL.Entities.Tags
 {
-    public class Tag: IdentityModel
+    public class Tag: IdentityEntity
     {
         public string Name { get; set; }
     }

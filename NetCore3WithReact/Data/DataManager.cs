@@ -28,7 +28,7 @@ namespace NetCore3WithReact.Data
         private IGenericRepository<Vendor> vendorRepository;
         public IGenericRepository<Vendor> VendorRepository => vendorRepository ??= CreateGenericRepositoryWithCache<Vendor>(nameof(Vendor));
 
-        private IGenericRepository<T> CreateGenericRepositoryWithCache<T>(string cacheKeyPrefix) where T: class, IIdentityModel
+        private IGenericRepository<T> CreateGenericRepositoryWithCache<T>(string cacheKeyPrefix) where T: class, IIdentityEntity
         {
             var baseRepository = new GenericRepository<T>(_dbContext);
             if (!_featureSettingsService.IsCacheEnabled)

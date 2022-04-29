@@ -2,7 +2,7 @@
 
 namespace NetCore3WithReact.DAL.Entities
 {
-    public class IdentityModel: IIdentityModel
+    public class IdentityEntity: IIdentityEntity
     {
         public Guid Id { get; set; }
     }

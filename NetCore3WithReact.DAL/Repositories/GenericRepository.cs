@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace NetCore3WithReact.DAL.Repositories
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IIdentityModel
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IIdentityEntity
     {
         //todo: change to factory
         private readonly IApplicationDbContext _dbContext;

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NetCore3WithReact.DAL.Entities
 {
-    public interface IIdentityModel
+    public interface IIdentityEntity
     {
         Guid Id { get; set; }
     }
