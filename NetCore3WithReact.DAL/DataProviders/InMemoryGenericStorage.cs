@@ -4,7 +4,7 @@ namespace NetCore3WithReact.DAL.DataProviders
 {
     public class InMemoryGenericStorage<TValue> where TValue : class
     {
-        private ConcurrentDictionary<string, TValue> _storage = new ConcurrentDictionary<string, TValue>();
+        private static ConcurrentDictionary<string, TValue> _storage = new ConcurrentDictionary<string, TValue>();
 
         public TValue Get(string key)
         {

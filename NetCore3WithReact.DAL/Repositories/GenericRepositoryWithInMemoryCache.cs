@@ -18,6 +18,7 @@ namespace NetCore3WithReact.DAL.Repositories
         public GenericRepositoryWithInMemoryCache(IGenericRepository<T> decoratedRepository, string cacheKeyPrefix)
         {
             _decoratedRepository = decoratedRepository;
+            _inMemoryStorage = new InMemoryGenericStorage<T>();
             _cacheKeyPrefix = cacheKeyPrefix;
         }
 
