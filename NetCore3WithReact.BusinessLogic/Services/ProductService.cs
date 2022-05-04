@@ -11,10 +11,12 @@ namespace NetCore3WithReact.BusinessLogic.Services
     public class ProductService : IProductService
     {
         private readonly IDataManager _dataManager;
+        private readonly ITagService _tagService;
 
-        public ProductService(IDataManager dataManager)
+        public ProductService(IDataManager dataManager, ITagService tagService)
         {
             _dataManager = dataManager;
+            _tagService = tagService;
         }
 
         public IEnumerable<ProductData> GetAllProducts()
@@ -31,13 +33,14 @@ namespace NetCore3WithReact.BusinessLogic.Services
 
         private ProductData ToProductData(Product product)
         {
+            var tagDataItems = _tagService.GetProductTags(product.Id);
+
             return new ProductData
             {
                 Id = product.Id,
                 Name = product.Name,
                 Vendor = ToVendorData(product.Vendor),
-                //TODO: productTag.Tag is null. Try to refactor it
-                Tags = product.Tags.Select(productTag => ToTagData(_dataManager.TagRepository.GetById(productTag.TagId))).ToList()
+                Tags = tagDataItems.ToList()
             };
         }
 

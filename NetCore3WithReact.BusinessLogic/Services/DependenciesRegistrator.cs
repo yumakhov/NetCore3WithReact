@@ -7,6 +7,7 @@ namespace NetCore3WithReact.BusinessLogic.Services
         public static void Register(IServiceCollection services)
         {
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ITagService, TagService>();
         }
     }
 }
