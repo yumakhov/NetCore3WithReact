@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using NetCore3WithReact.DAL.DataProviders;
 using NetCore3WithReact.DAL.Entities;
 using NetCore3WithReact.Utilities;
 using StackExchange.Redis;
@@ -8,16 +9,15 @@ using System.Linq.Expressions;
 
 namespace NetCore3WithReact.DAL.Repositories
 {
-    public class GenericRepositoryWithCache<T>: IGenericRepository<T> where T: class, IIdentityEntity
+    public class GenericRepositoryWithInMemoryCache<T>: IGenericRepository<T> where T: class, IIdentityEntity
     {
         private readonly IGenericRepository<T> _decoratedRepository;
-        private readonly IDistributedCache _distributedCache;
+        private readonly InMemoryGenericStorage<T> _inMemoryStorage;
         private readonly string _cacheKeyPrefix;
 
-        public GenericRepositoryWithCache(IGenericRepository<T> decoratedRepository, IDistributedCache distributedCache, string cacheKeyPrefix)
+        public GenericRepositoryWithInMemoryCache(IGenericRepository<T> decoratedRepository, string cacheKeyPrefix)
         {
             _decoratedRepository = decoratedRepository;
-            _distributedCache = distributedCache;
             _cacheKeyPrefix = cacheKeyPrefix;
         }
 
@@ -39,7 +39,7 @@ namespace NetCore3WithReact.DAL.Repositories
 
         public T GetById(Guid id, string includeProperties = "")
         {
-            var cachedItem = GetCachedItem<T>(id);
+            var cachedItem = GetCachedItem(id);
             if (cachedItem != null)
             {
                 return cachedItem;
@@ -50,46 +50,16 @@ namespace NetCore3WithReact.DAL.Repositories
             return entity;
         }
 
-        private TEntity GetCachedItem<TEntity>(Guid id) where TEntity : class, IIdentityEntity
-        {
-            try
-            {
-                var cacheKey = CreateItemCacheKey(id);
-                var cachedItemJson = _distributedCache.GetString(cacheKey);
-                if (cachedItemJson == null)
-                {
-                    return null;
-                }
-
-                return JsonSerializer.Deserialize<TEntity>(cachedItemJson);
-            }
-            catch (RedisConnectionException)
-            {
-                //todo: would be good to use circuit breaker pattern here
-                return null;
-            }
-            catch (Exception)
-            {
-                //todo: log error
-                return null;
-            }
+        private T GetCachedItem(Guid id)
+        {            
+            var cacheKey = CreateItemCacheKey(id);
+            return _inMemoryStorage.Get(cacheKey);           
         }
 
-        private void SetItemToCache<TEntity>(TEntity entity) where TEntity : class, IIdentityEntity
-        {
-            try
-            {
-                var cacheKey = CreateItemCacheKey(entity.Id);
-                _distributedCache.SetString(cacheKey, JsonSerializer.Serialize(entity));
-            }
-            catch (RedisConnectionException)
-            {
-                //todo: would be good to use circuit breaker pattern here
-            }
-            catch (Exception)
-            {
-                //todo: log error
-            }
+        private void SetItemToCache(T entity)
+        {            
+            var cacheKey = CreateItemCacheKey(entity.Id);
+            _inMemoryStorage.Set(cacheKey, entity);
         }
 
         public void Insert(T entityToInsert)
@@ -110,19 +80,8 @@ namespace NetCore3WithReact.DAL.Repositories
 
         private void InvalidateItemCache(Guid id)
         {            
-            try
-            {
-                var cacheKey = CreateItemCacheKey(id);
-                _distributedCache.Remove(cacheKey);
-            }
-            catch (RedisConnectionException)
-            {
-                //todo: would be good to use circuit breaker pattern here
-            }
-            catch (Exception)
-            {
-                //todo: log error
-            }
+            var cacheKey = CreateItemCacheKey(id);
+            _inMemoryStorage.Remove(cacheKey);
         }
 
         private string CreateItemCacheKey(Guid id)

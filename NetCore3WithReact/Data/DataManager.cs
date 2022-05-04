@@ -40,7 +40,7 @@ namespace NetCore3WithReact.Data
                 return baseRepository;
             }
 
-            return new GenericRepositoryWithCache<T>(baseRepository, _distributedCache, cacheKeyPrefix);
+            return new GenericRepositoryWithDistributedCache<T>(baseRepository, _distributedCache, cacheKeyPrefix);
         }
 
         public int Save()
