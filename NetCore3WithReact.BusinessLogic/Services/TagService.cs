@@ -33,6 +33,13 @@ namespace NetCore3WithReact.BusinessLogic.Services
             return ToTagData(tag);
         }
 
+        public Tag GetTag(string name)
+        {
+            return _dataManager.TagRepository
+                .Get(entity => entity.Name == name)
+                .FirstOrDefault();
+        }
+
         private static TagData ToTagData(Tag tag)
         {
             return new TagData

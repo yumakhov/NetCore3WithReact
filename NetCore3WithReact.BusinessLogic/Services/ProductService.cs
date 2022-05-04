@@ -101,7 +101,7 @@ namespace NetCore3WithReact.BusinessLogic.Services
                 throw new InvalidOperationException();
             }
 
-            var tag = _dataManager.TagRepository.Get(entity => entity.Name == tagName).FirstOrDefault();
+            var tag = _tagService.GetTag(tagName);
             if (tag == null)
             {
                 tag = new Tag
@@ -109,8 +109,9 @@ namespace NetCore3WithReact.BusinessLogic.Services
                     Id = Guid.NewGuid(),
                     Name = tagName
                 };
-            }
-            _dataManager.TagRepository.Insert(tag);
+
+                _dataManager.TagRepository.Insert(tag);
+            }            
 
             product.Tags.Add(new ProductTag
             {
