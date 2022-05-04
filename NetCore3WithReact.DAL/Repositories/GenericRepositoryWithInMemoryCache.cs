@@ -1,8 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using NetCore3WithReact.DAL.DataProviders;
+﻿using NetCore3WithReact.DAL.DataProviders;
 using NetCore3WithReact.DAL.Entities;
-using NetCore3WithReact.Utilities;
-using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
