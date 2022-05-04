@@ -1,7 +1,9 @@
-﻿namespace NetCore3WithReact.DAL.Services
+﻿using NetCore3WithReact.DAL.Services.Data;
+
+namespace NetCore3WithReact.DAL.Services
 {
     public interface IFeatureSettingsService
     {
-        bool IsCacheEnabled { get;  }
+        CacheProvider CacheProvider { get;  }
     }
 }

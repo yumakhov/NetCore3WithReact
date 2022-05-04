@@ -5,6 +5,7 @@ using NetCore3WithReact.DAL.Entities.Sales;
 using NetCore3WithReact.DAL.Entities.Tags;
 using NetCore3WithReact.DAL.Repositories;
 using NetCore3WithReact.DAL.Services;
+using NetCore3WithReact.DAL.Services.Data;
 using System;
 
 namespace NetCore3WithReact.Data
@@ -35,12 +36,17 @@ namespace NetCore3WithReact.Data
         private IGenericRepository<T> CreateGenericRepositoryWithCache<T>(string cacheKeyPrefix) where T: class, IIdentityEntity
         {
             var baseRepository = new GenericRepository<T>(_dbContext);
-            if (!_featureSettingsService.IsCacheEnabled)
+            if (_featureSettingsService.CacheProvider == CacheProvider.InMemory)
             {
-                return baseRepository;
+                return new GenericRepositoryWithInMemoryCache<T>(baseRepository, cacheKeyPrefix);
             }
 
-            return new GenericRepositoryWithDistributedCache<T>(baseRepository, _distributedCache, cacheKeyPrefix);
+            if (_featureSettingsService.CacheProvider == CacheProvider.Distributed)
+            {
+                return new GenericRepositoryWithDistributedCache<T>(baseRepository, _distributedCache, cacheKeyPrefix);
+            }
+
+            return baseRepository;
         }
 
         public int Save()

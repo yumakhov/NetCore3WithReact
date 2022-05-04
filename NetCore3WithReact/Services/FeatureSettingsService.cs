@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NetCore3WithReact.DAL.Services;
+using NetCore3WithReact.DAL.Services.Data;
+using System;
 
 namespace NetCore3WithReact.Services
 {
@@ -12,6 +14,8 @@ namespace NetCore3WithReact.Services
             _featureSettingsSection = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("FeatureSettings");
         }
 
-        public bool IsCacheEnabled => bool.Parse(_featureSettingsSection["IsCacheEnabled"]);
+        public CacheProvider CacheProvider => Enum.TryParse<CacheProvider>(_featureSettingsSection["cacheProvider"], true, out var cacheProvider) 
+            ? cacheProvider 
+            : CacheProvider.None;
     }
 }
