@@ -4,6 +4,7 @@ using NetCore3WithReact.Utilities;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace NetCore3WithReact.DAL.Repositories
@@ -27,7 +28,7 @@ namespace NetCore3WithReact.DAL.Repositories
             InvalidateItemCache(entityToDelete.Id);
         }
 
-        public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<System.Linq.IQueryable<T>, System.Linq.IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+        public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
         {
             return _decoratedRepository.Get(filter, orderBy, includeProperties);
         }
